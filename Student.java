@@ -17,15 +17,19 @@ public class Student {
 
     // Constructors
     public Student() {
-
+        this.setAll(DEF_NAME, DEF_RACE, DEF_GRADELEVEL);
     }
 
     public Student(String name, String race, int gradeLevel) {
-
+        this.setAll(name, race, gradeLevel);
     }
 
     public Student(Student o) {
-
+        if (o == null) {
+            throw new IllegalArgumentException("Cannot copy null obect in Student copy constructor");
+        } else {
+            this.setAll(o.name, o.race, o.gradeLevel);
+        }
     }
 
     // Setters
@@ -56,6 +60,10 @@ public class Student {
         }
     }
 
+    public boolean setAll(String name, String race, int gradeLevel) {
+        return this.setName(name) && this.setRace(race) && this.setGradeLevel(gradeLevel);
+    }
+
     // Getters
     public String getName() {
         return this.name;
@@ -71,11 +79,17 @@ public class Student {
 
     // Equals & toString & other methods
     public String toString() {
-        return "";
+        return "This student's name is " + this.name + "\nTheir race is " + this.race + " and they are grade level "
+                + this.gradeLevel;
     }
 
     public boolean equals(Object o) {
-        return false;
+        if (o == null || (!(o instanceof Student))) {
+            return false;
+        }
+        Student otherStudent = (Student) o;
+        return this.name.equals(otherStudent.name) && this.race.equals(otherStudent.race)
+                && this.gradeLevel == otherStudent.gradeLevel;
     }
 
     public static boolean isInArray(String[] values, String value) {
